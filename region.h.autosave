@@ -1,0 +1,133 @@
+﻿#ifndef REGION_H
+#define REGION_H
+
+//OpenCV头文件
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <cmath>
+#include <QDebug>
+#include <QString>
+#include <QDateTime>
+#include <QVector>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlQueryModel>
+
+//监控区域类
+class Region    //矩形目标选择框
+{
+public:
+
+    QString DataID;
+    QString RegionName;
+    QString ObjID;
+    int ObjType;
+    int VNum;
+    QString X;
+    QString Y;
+    double Angle;
+    QDateTime Time;
+    QString Intro;
+    bool isCanceled;
+
+    static const QString Table_Name;
+    static const QString Table_CName;
+
+    static const QString DataID_Name;
+    static const QString RegionName_Name;
+    static const QString ObjID_Name;
+    static const QString ObjType_Name;
+    static const QString VNum_Name;
+    static const QString X_Name;
+    static const QString Y_Name;
+    static const QString Angle_Name;
+    static const QString Time_Name;
+    static const QString Intro_Name;
+
+    static const QString DataID_CName;
+    static const QString RegionName_CName;
+    static const QString ObjID_CName;
+    static const QString ObjType_CName;
+    static const QString VNum_CName;
+    static const QString X_CName;
+    static const QString Y_CName;
+    static const QString Angle_CName;
+    static const QString Time_CName;
+    static const QString Intro_CName;
+
+    static const int TypeRect;
+    static const int TypeEllipse;
+    static const int TypePoly;
+
+    Region();
+
+    Region(int type, cv::Scalar c);
+
+    Region(int type, cv::Scalar c, QVector<cv::Point*> ps);
+
+    ~Region();
+
+    bool isSelected;
+    int type;
+    //颜色
+    cv::Scalar color;
+    cv::Point* cp;
+    //多边形
+    QVector<cv::Point*> poly;
+    void setPoly(QVector<cv::Point*> poly);
+    bool isInner(cv::Point p);
+
+    //找点
+    cv::Point* leftPoint();
+    cv::Point* rightPoint();
+    cv::Point* topPoint();
+    cv::Point* bottomPoint();
+    cv::Point* centralPoint();
+    cv::Point leftPoint(QVector<cv::Point> poly);
+    cv::Point rightPoint(QVector<cv::Point> poly);
+    cv::Point topPoint(QVector<cv::Point> poly);
+    cv::Point bottomPoint(QVector<cv::Point> poly);
+    cv::Point centralPoint(QVector<cv::Point> poly);
+    void setCentralPoint(cv::Point p, int width, int height);
+    void setCentralPoint2(cv::Point p, int width, int height);
+    //平移
+    void move(int offsetx, int offsety, int width, int height);
+    void move(int offsetx, int offsety);
+    //旋转
+    void rotate(cv::Point* p1, cv::Point* p2, int width, int height);
+    //旋转2
+    void rotate(double angle, int width, int height);
+    //旋转3
+    cv::Point rotate(cv::Point p);
+    //旋转4
+    void rotate(int width, int height);
+    QVector<cv::Point> getPolyAfterRotating();
+    cv::Point leftPointAfterRotating();
+    cv::Point rightPointAfterRotating();
+    cv::Point topPointAfterRotating();
+    cv::Point bottomPointAfterRotating();
+    cv::Point centralPointAfterRotating();
+    cv::Rect getRectAfterRotating();
+    void setRotateAngle(double angle);
+    //缩放
+    void zoom(double factor, int width, int height);
+    void zoom(double factor);
+    //获得旋转角度
+    double getAngle(cv::Point* p1, cv::Point* p2);
+    QVector<cv::Point*> getPoly();
+    QVector<cv::Point> clonePoly();
+
+    void draw(cv::Mat mat);
+    cv::Mat draw();
+    cv::Mat getSubMat(cv::Mat mat);
+    static QString generateID();
+
+//    void insertIntoDB();
+//    void updateDB();
+//    void deleteFromDB();
+//    static void deleteFromDB(QString id);
+//    void selectFromDB(QString id);
+private:
+
+};
+#endif // REGION_H

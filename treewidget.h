@@ -1,0 +1,74 @@
+#ifndef TREEWIDGET_H
+#define TREEWIDGET_H
+
+#include <QWidget>
+#include <QAction>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QTreeWidgetItemIterator>
+#include <QContextMenuEvent>
+#include <QScrollArea>
+#include <QResizeEvent>
+//opencv的头文件
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include "myqtreewidget.h"
+#include "datamodel.h"
+
+#include "imagewidget.h"
+#include "resultwidget.h"
+
+class TreeWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit TreeWidget(QWidget *parent = nullptr);
+    ~TreeWidget();
+
+    DataModel* data;
+    ImageWidget* iw1;
+    ImageWidget* iw2;
+    ResultWidget* rw;
+
+    QTreeWidget* tree;
+    //QScrollArea* qsa;
+
+    QAction* Add_Assess;
+    QAction* Add_OpticesAssess;
+    QAction* Add_InfraredAssess;
+    QAction* Add_SARAssess;
+    QAction* Delete;
+    QAction* To_IW1;
+    QAction* To_IW2;
+    QAction* Load_Image;
+
+    void resizeEvent(QResizeEvent *);
+    void contextMenuEvent(QContextMenuEvent *);
+    void setDataModel(DataModel* data);
+
+    void setImageWidget1(ImageWidget* iw1);
+    void setImageWidget2(ImageWidget* iw2);
+    void setResultWidget(ResultWidget* rw);
+
+
+signals:
+
+public slots:
+
+private:
+    void treeInitial();
+    int assesscount;
+
+private slots:
+    void addAssess();
+    void addOpticesAssess();
+    void addInfraredAssess();
+    void addSARAssess();
+    void deleteItem();
+    void toIW1();
+    void toIW2();
+    void loadImage();
+};
+
+#endif // TREEWIDGET_H

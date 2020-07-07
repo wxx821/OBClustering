@@ -1,0 +1,15 @@
+#ifndef DATAMODEL_H
+#define DATAMODEL_H
+
+
+class DataModel  //图像文件描述信息
+{
+public:
+    DataModel();
+
+    bool isChanged;
+    void clearTemp();
+    void emptyData();
+};
+
+#endif // DATAMODEL_H
