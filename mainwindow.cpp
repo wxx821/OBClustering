@@ -17,6 +17,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlQueryModel>
+#include <QTabWidget>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -38,36 +39,35 @@ MainWindow::MainWindow(QWidget *parent)
     this->addMyMenu();
     this->addMyToolBar();
     this->splitter1 = new QSplitter(Qt::Horizontal,this);
-    this->splitter2 = new QSplitter(Qt::Vertical,this);
+    //this->splitter2 = new QSplitter(Qt::Vertical,this);
 
-    this->iw1 = new ImageWidget(this,0);
-    this->iw2 = new ImageWidget(this,1);
+    this->iw = new ImageWidget(this);
+    this->siw = new SImageWidget(this);
+    this->riw = new RImageWidget(this);
+    QTabWidget* tab = new QTabWidget(this);
+    tab->addTab(siw,"源图像");
+    tab->addTab(iw,"目标图像");
+    tab->addTab(riw,"聚类图像");
     //QString matfile = "./image/timg.bmp";
     //cv::Mat mat = cv::imread(matfile.toStdString());
 
     //iw1->setMat(mat);
     //iw2->setMat(mat);
-    iw1->setData(dm);
-    iw2->setData(dm);
-    iw1->setAnother(iw2);
-    iw2->setAnother(iw1);
+    iw->setData(dm);
+
 
     this->rw = new ResultWidget(this);
     rw->setData(dm);
     this->tw = new TreeWidget(this);
     tw->setDataModel(dm);
-    tw->setImageWidget1(iw1);
-    tw->setImageWidget2(iw2);
-    iw1->setResultWidget(rw);
-    iw2->setResultWidget(rw);
-    this->splitter2->addWidget(iw1);
-    this->splitter2->addWidget(iw2);
-    this->splitter2->setOpaqueResize(true);
-    this->splitter2->setStretchFactor(0,1);
-    this->splitter2->setStretchFactor(1,1);
-    this->splitter2->setHandleWidth(1);
+    tw->setImageWidget(iw);
+    tw->setSImageWidget(siw);
+    tw->setRImageWidget(riw);
+
+    iw->setResultWidget(rw);
+
     this->splitter1->addWidget(tw);
-    this->splitter1->addWidget(splitter2);
+    this->splitter1->addWidget(tab);
     this->splitter1->addWidget(rw);
     this->splitter1->setOpaqueResize(true);
     this->splitter1->setStretchFactor(0,1);
@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(widget);
 
     this->setWindowState(Qt::WindowMaximized);
-    this->setWindowTitle("目标伪装效果评估软件");
+    this->setWindowTitle("目标和背景聚类模型建立软件");
     this->show();
 }
 
@@ -188,14 +188,12 @@ void MainWindow::newproject_Clicked(){
     if(dm!=nullptr){
         dm->emptyData();
     }
-    this->iw1->setMat();
-    this->iw2->setMat();
+    this->iw->setMat();
     this->rw->setMat1(cv::Mat(),nullptr);
     this->rw->setMat2(cv::Mat(),nullptr);
     dm->clearTemp();
     this->tw->setDataModel(dm);
-    this->iw1->setData(dm);
-    this->iw2->setData(dm);
+    this->iw->setData(dm);
     this->rw->setData(dm);
     projectfile = "";
     this->dm->isChanged = false;
@@ -243,14 +241,12 @@ void MainWindow::openfromfile_Clicked(){
             if(dm!=nullptr){
                 dm->emptyData();
             }
-            this->iw1->setMat();
-            this->iw2->setMat();
+            this->iw->setMat();
             this->rw->setMat1(cv::Mat(),nullptr);
             this->rw->setMat2(cv::Mat(),nullptr);
             dm->clearTemp();
             this->tw->setDataModel(dm);
-            this->iw1->setData(dm);
-            this->iw2->setData(dm);
+            this->iw->setData(dm);
             this->rw->setData(dm);
             wd->close();
             delete wd;

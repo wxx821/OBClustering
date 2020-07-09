@@ -9,6 +9,7 @@
 #include <QContextMenuEvent>
 #include <QScrollArea>
 #include <QResizeEvent>
+#include <QTreeWidgetItem>
 //opencv的头文件
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -17,6 +18,8 @@
 #include "datamodel.h"
 
 #include "imagewidget.h"
+#include "simagewidget.h"
+#include "rimagewidget.h"
 #include "resultwidget.h"
 
 class TreeWidget : public QWidget
@@ -27,28 +30,25 @@ public:
     ~TreeWidget();
 
     DataModel* data;
-    ImageWidget* iw1;
-    ImageWidget* iw2;
+    ImageWidget* iw;
+    SImageWidget* siw;
+    RImageWidget* riw;
     ResultWidget* rw;
 
     QTreeWidget* tree;
     //QScrollArea* qsa;
 
-    QAction* Add_Assess;
-    QAction* Add_OpticesAssess;
-    QAction* Add_InfraredAssess;
-    QAction* Add_SARAssess;
+    QAction* Add_Image;
     QAction* Delete;
-    QAction* To_IW1;
-    QAction* To_IW2;
     QAction* Load_Image;
 
     void resizeEvent(QResizeEvent *);
     void contextMenuEvent(QContextMenuEvent *);
     void setDataModel(DataModel* data);
 
-    void setImageWidget1(ImageWidget* iw1);
-    void setImageWidget2(ImageWidget* iw2);
+    void setImageWidget(ImageWidget* iw);
+    void setSImageWidget(SImageWidget* siw);
+    void setRImageWidget(RImageWidget* riw);
     void setResultWidget(ResultWidget* rw);
 
 
@@ -58,16 +58,12 @@ public slots:
 
 private:
     void treeInitial();
-    int assesscount;
+    int imagecount;
 
 private slots:
-    void addAssess();
-    void addOpticesAssess();
-    void addInfraredAssess();
-    void addSARAssess();
+    void addImage();
     void deleteItem();
-    void toIW1();
-    void toIW2();
+    void toIW(QTreeWidgetItem* item,int index);
     void loadImage();
 };
 

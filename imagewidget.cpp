@@ -53,9 +53,9 @@ const int ImageWidget::fromSFill2=38;
 const int ImageWidget::fromSFillBack2=39;
 
 
-ImageWidget::ImageWidget(QWidget *parent, int index) : QWidget(parent)
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent)
 {
-    this->index = index;
+    //this->index = index;
     myparent = parent;
     isFull = false;
     isFirstClicked = false;
@@ -1278,7 +1278,7 @@ void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
         //myparent->setLayout(myparentlayout);
         this->resize(mysize);
         this->setParent(myparent);
-        QSplitter* qsp = ((MainWindow*)this->parentWidget())->splitter2;
+        QSplitter* qsp = ((MainWindow*)this->parentWidget())->splitter1;
         if(this->index == 0){
             qsp->insertWidget(0,this);
         }

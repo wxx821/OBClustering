@@ -65,6 +65,8 @@ SOURCES += \
         Word/reportutils.cpp \
         datamodel.cpp \
         detectionpair.cpp \
+        imageadddialog.cpp \
+        imageinfo.cpp \
         imagelabel.cpp \
         imageobjects.cpp \
         imagescrollarea.cpp \
@@ -76,6 +78,8 @@ SOURCES += \
         objectitem.cpp \
         region.cpp \
         resultwidget.cpp \
+        rimagewidget.cpp \
+        simagewidget.cpp \
         systemconfig.cpp \
         treewidget.cpp \
         utils.cpp \
@@ -86,6 +90,8 @@ HEADERS += \
         Word/reportutils.h \
         datamodel.h \
         detectionpair.h \
+        imageadddialog.h \
+        imageinfo.h \
         imagelabel.h \
         imageobjects.h \
         imagescrollarea.h \
@@ -96,6 +102,8 @@ HEADERS += \
         objectitem.h \
         region.h \
         resultwidget.h \
+        rimagewidget.h \
+        simagewidget.h \
         systemconfig.h \
         treewidget.h \
         ui_mainwindow.h \

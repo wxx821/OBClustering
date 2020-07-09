@@ -31,7 +31,7 @@ class ImageWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ImageWidget(QWidget *parent = nullptr, int index=0);
+    explicit ImageWidget(QWidget *parent = nullptr);
     ~ImageWidget();
     static const int fromOObj;
     static const int fromOObjBack;

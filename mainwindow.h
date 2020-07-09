@@ -15,6 +15,8 @@
 
 #include "treewidget.h"
 #include "imagewidget.h"
+#include "simagewidget.h"
+#include "rimagewidget.h"
 #include "resultwidget.h"
 #include "datamodel.h"
 
@@ -25,10 +27,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QSplitter* splitter2;
+    QSplitter* splitter1;
     TreeWidget* tw;
-    ImageWidget* iw1;
-    ImageWidget* iw2;
+    ImageWidget* iw;
+    SImageWidget* siw;
+    RImageWidget* riw;
     ResultWidget* rw;
 
     DataModel* dm;
@@ -66,7 +69,6 @@ private:
     QToolButton* pbSaveproject;
     QToolButton* pbDBOperate;
     QToolButton* pbReportgenerate;
-    QSplitter* splitter1;
 
     QGridLayout* lay;
 
